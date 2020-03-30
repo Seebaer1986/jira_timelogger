@@ -43,7 +43,7 @@ if folder_path.lower() == 'default':
 
     # clear folder_path from config
     config.set('Outlook','folder_path', '')
-    cfgfile = open(config_filename, 'w')
+    cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
     config.write(cfgfile)
     cfgfile.close()
 else:
@@ -75,7 +75,7 @@ else:
 
     # write new folder_path to config
     config.set('Outlook','folder_path', folder_path)
-    cfgfile = open(config_filename, 'w')
+    cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
     config.write(cfgfile)
     cfgfile.close()
 
@@ -93,7 +93,7 @@ if processed_category == '':
 
 # write new category name to config
 config.set('Outlook','processed_category', processed_category)
-cfgfile = open(config_filename, 'w')
+cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
 config.write(cfgfile)
 cfgfile.close()
 
@@ -147,7 +147,7 @@ else:
 
 # write new JIRA URL to config
 config.set('Jira','url', jira_url)
-cfgfile = open(config_filename, 'w')
+cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
 config.write(cfgfile)
 cfgfile.close()
 
@@ -164,7 +164,7 @@ else:
 
 # write new JIRA username to config
 config.set('Jira','username', jira_user)
-cfgfile = open(config_filename, 'w')
+cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
 config.write(cfgfile)
 cfgfile.close()
 
@@ -198,7 +198,7 @@ if '.atlassian.net' in jira_url and use_token.upper() != 'Y':
     
     if save_token.upper() == 'Y':
         config.set('Jira','api_token', jira_password)
-        cfgfile = open(config_filename, 'w')
+        cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
         config.write(cfgfile)
         cfgfile.close()
 
