@@ -9,7 +9,7 @@ Read appointments from Microsoft Outlook and use them to log work in an Atlassia
 * download the repo
 * navigate to the repo on your disk with a command prompt
 * install dependencies: `pip install .`
-* run the script: `python jira_timelogger\__init__.py`
+* run the script: `python jira_timelogger`
 
 ## Usage
 The script will guide you through and ask different questions:
