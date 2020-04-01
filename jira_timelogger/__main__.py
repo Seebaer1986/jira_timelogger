@@ -207,7 +207,7 @@ def generate_default_config(config_filename):
     config.write(cfgfile)
     cfgfile.close()
 
-def get_outlook_appointments(config, config_filename, ns, begin, end):
+def get_outlook_appointments(config, config_filename, ns, begin, end=''):
     # get folder_path from config
     folder_path = config.get('Outlook', 'folder_path')
 
