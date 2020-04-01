@@ -45,7 +45,7 @@ def main():
 
     # if you should use the default calendar
     if folder_path.lower() == 'default':
-        appointments = ns.GetDefaultFolder(9).Items 
+        appointments = ns.GetDefaultFolder(9).Items
 
         # clear folder_path from config
         write_config(config, config_filename, section='Outlook', key='folder_path', value='')
@@ -81,9 +81,9 @@ def main():
         write_config(config, config_filename, section='Outlook', key='folder_path', value=folder_path)
 
     # read category name to mark all processed items in outlook
-    processed_category_default = 'jira_logged'
     processed_category = config.get('Outlook', 'processed_category')
     if processed_category == '':
+        processed_category_default = 'jira_logged'
         print('')
         print('Please input a name for the category which should be used to mark processed appointments.')
         user_input = input(f'Leave blank to use the programs default: "{processed_category_default}"')
