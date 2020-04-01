@@ -243,14 +243,17 @@ def get_outlook_appointments(config, config_filename, ns, begin, end=''):
         appointments = folder.Items
 
     if begin == '':
-        begin = datetime.date.today().strftime('%m/%d/%Y')
+        begin = datetime.date.today().strftime('%d/%m/%Y')
     else:
-        begin = begin[5:7]+'/'+begin[8:10]+'/'+begin[:4]
+        begin = begin[8:10]+'/'+begin[5:7]+'/'+begin[:4]
 
     if end == '':
-        end = datetime.date.today().strftime('%m/%d/%Y')
+        end = datetime.date.today().strftime('%d/%m/%Y')
     else:
-        end = end[5:7]+'/'+end[8:10]+'/'+end[:4]
+        end = end[8:10]+'/'+end[5:7]+'/'+end[:4]
+
+    # for debugging
+    #print(f'Begin: {begin} | End: {end}')
 
     # restrict outlook items to the items in this timeframe
     restriction = f'[Start] >= "{begin} 0:00am" AND [Start] <= "{end} 11:59pm"'
