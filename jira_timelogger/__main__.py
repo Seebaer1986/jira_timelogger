@@ -57,10 +57,8 @@ def main():
         appointments = ns.GetDefaultFolder(9).Items 
 
         # clear folder_path from config
-        config.set('Outlook','folder_path', '')
-        cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
-        config.write(cfgfile)
-        cfgfile.close()
+        write_config(config, config_filename, section='Outlook', key='folder_path', value='')
+        
     else:
     # if folderPath was given, check if it is a legit path
         # cut away the first \\ if there are any
@@ -89,10 +87,7 @@ def main():
         appointments = folder.Items
 
         # write new folder_path to config
-        config.set('Outlook','folder_path', folder_path)
-        cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
-        config.write(cfgfile)
-        cfgfile.close()
+        write_config(config, config_filename, section='Outlook', key='folder_path', value=folder_path)
 
     # read category name to mark all processed items in outlook
     processed_category_default = 'jira_logged'
@@ -107,10 +102,7 @@ def main():
             processed_category = user_input
 
     # write new category name to config
-    config.set('Outlook','processed_category', processed_category)
-    cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
-    config.write(cfgfile)
-    cfgfile.close()
+    write_config(config, config_filename, section='Outlook', key='processed_category', value=processed_category)
 
     # check if the category is already present in outlook
     category_found = False
@@ -161,10 +153,7 @@ def main():
             jira_url = jira_input
 
     # write new JIRA URL to config
-    config.set('Jira','url', jira_url)
-    cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
-    config.write(cfgfile)
-    cfgfile.close()
+    write_config(config, config_filename, section='Jira', key='url', value=jira_url)
 
     # ask for username
     jira_user = config.get('Jira', 'username')
@@ -178,10 +167,7 @@ def main():
             jira_user = jira_input
 
     # write new JIRA username to config
-    config.set('Jira','username', jira_user)
-    cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
-    config.write(cfgfile)
-    cfgfile.close()
+    write_config(config, config_filename, section='Jira', key='username', value=jira_user)
 
     # init some variables
     jira_password = ''
@@ -216,10 +202,7 @@ def main():
         save_token = input('Do you want to save the API Token for the next session? y = yes, n = no: ')
         
         if save_token.upper() == 'Y':
-            config.set('Jira','api_token', jira_password)
-            cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
-            config.write(cfgfile)
-            cfgfile.close()
+            write_config(config, config_filename, section='Jira', key='api_token', value=jira_password)
 
     try:
         auth_jira = JIRA(jira_url, basic_auth=(jira_user, jira_password))
@@ -262,6 +245,12 @@ def main():
         appointmentItem.Categories = appointmentItem.Categories + ', ' + processed_category
         appointmentItem.Save()
         print(f'    Added the category {processed_category} to the Outlook item.')
+
+def write_config(config, config_filename, section, key, value):
+    config.set(section, key, value)
+    cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
+    config.write(cfgfile)
+    cfgfile.close()
 
 if __name__ == "__main__":
     main()
