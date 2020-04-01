@@ -18,16 +18,7 @@ def main():
     # check for existence of config file
     if not os.path.exists(os.path.join(os.path.dirname(__file__), config_filename)):
         print('Config.conf does not exist. Generating default config.')
-        config = configparser.ConfigParser()
-        config['Outlook'] = {'folder_path':'',
-                            'processed_category':''}
-        config['Jira'] = {'url':'',
-                        'username':'',
-                        'api_token':''}
-        # write config file
-        cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
-        config.write(cfgfile)
-        cfgfile.close()
+        generate_default_config(config_filename=config_filename)
 
     # open config
     config = configparser.RawConfigParser(allow_no_value=True)
@@ -248,6 +239,19 @@ def main():
 
 def write_config(config, config_filename, section, key, value):
     config.set(section, key, value)
+    cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
+    config.write(cfgfile)
+    cfgfile.close()
+
+def generate_default_config(config_filename):
+    # create config object
+    config = configparser.ConfigParser()
+    config['Outlook'] = {'folder_path':'',
+                        'processed_category':''}
+    config['Jira'] = {'url':'',
+                    'username':'',
+                    'api_token':''}
+    # write config file
     cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
     config.write(cfgfile)
     cfgfile.close()
