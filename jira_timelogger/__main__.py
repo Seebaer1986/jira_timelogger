@@ -42,43 +42,10 @@ def main():
         folder_path = input()
         if folder_path == '':
             folder_path = 'default'
-
-    # if you should use the default calendar
-    if folder_path.lower() == 'default':
-        appointments = ns.GetDefaultFolder(9).Items
-
-        # clear folder_path from config
-        write_config(config, config_filename, section='Outlook', key='folder_path', value='')
-        
-    else:
-    # if folderPath was given, check if it is a legit path
-        # cut away the first \\ if there are any
-        if folder_path[:2] == '\\\\':
-            folder_path = folder_path[2:]
-
-        # split folder path
-        folders = folder_path.split('\\')
-
-        # try to set folder to root of the path
-        try:
-            folder = ns.Folders.Item(folders[0])
-
-        except:
-            print(f'Given path to calendar "{folder_path}" is not correct, please check.')
-            sys.exit(1)
-
-        # for the rest of the path check also if the path is legit
-        for sub_folder in folders[1:]:
-            try:
-                folder = folder.Folders.Item(sub_folder)
-            except:
-                print(f'Given path to calendar "{folder_path}" is not correct, please check.')
-                sys.exit(1)
-
-        appointments = folder.Items
-
-        # write new folder_path to config
-        write_config(config, config_filename, section='Outlook', key='folder_path', value=folder_path)
+             # clear folder_path from config
+            write_config(config, config_filename, section='Outlook', key='folder_path', value='')
+        else:
+            write_config(config, config_filename, section='Outlook', key='folder_path', value=folder_path)
 
     # read category name to mark all processed items in outlook
     processed_category = config.get('Outlook', 'processed_category')
@@ -113,25 +80,9 @@ def main():
     #get all appointments from outlook
     print('')
     print('Please enter the date (format: YYYY-MM-DD) were you want to start processing items.')
-    begin = input('Press ENTER to use default (today): ')
-    if begin == '':
-        begin = datetime.date.today().strftime('%m/%d/%Y')
-    else:
-        begin = begin[5:7]+'/'+begin[8:10]+'/'+begin[:4]
-
-    end = datetime.date.today()
-
-    # restrict outlook items to the items in this timeframe
-    restriction = f'[Start] >= "{begin} 0:00am" AND [Start] <= "{end.strftime("%m/%d/%Y")} 11:59pm"'
-    restricted_items = appointments.Restrict(restriction)
-    restricted_items.IncludeRecurrences = 'True'
-    restricted_items.Sort('[Start]')
-
-    ## for debugging -> output restricted items and end the program
-    #for item in restricted_items:
-    #    print(f'{item.Subject} ({item.Start})')
-    #sys.exit(1)
-
+    begin = input('Press ENTER to use default (today): ')    
+    appointments = get_outlook_appointments(config, config_filename=config_filename, ns=ns, begin=begin)
+    
     # ask for JIRA instance
     jira_url = config.get('Jira', 'url')
     if jira_url == '':
@@ -204,7 +155,7 @@ def main():
     print('')
     print('Processing Outlook Appointments...')
 
-    for appointmentItem in restricted_items:
+    for appointmentItem in appointments:
         # check if it was already processed before
         if processed_category in appointmentItem.Categories:
             print(f'[Info] Appointment "{appointmentItem.Subject}" is already logged in Jira')
@@ -255,6 +206,64 @@ def generate_default_config(config_filename):
     cfgfile = open(os.path.join(os.path.dirname(__file__), config_filename), 'w')
     config.write(cfgfile)
     cfgfile.close()
+
+def get_outlook_appointments(config, config_filename, ns, begin, end):
+    # get folder_path from config
+    folder_path = config.get('Outlook', 'folder_path')
+
+    # if you should use the default calendar
+    if folder_path == '':
+        appointments = ns.GetDefaultFolder(9).Items
+        
+    else:
+    # if folderPath was given, check if it is a legit path
+        # cut away the first \\ if there are any
+        if folder_path[:2] == '\\\\':
+            folder_path = folder_path[2:]
+
+        # split folder path
+        folders = folder_path.split('\\')
+
+        # try to set folder to root of the path
+        try:
+            folder = ns.Folders.Item(folders[0])
+
+        except:
+            print(f'Given path to calendar "{folder_path}" is not correct, please check.')
+            sys.exit(1)
+
+        # for the rest of the path check also if the path is legit
+        for sub_folder in folders[1:]:
+            try:
+                folder = folder.Folders.Item(sub_folder)
+            except:
+                print(f'Given path to calendar "{folder_path}" is not correct, please check.')
+                sys.exit(1)
+
+        appointments = folder.Items
+
+    if begin == '':
+        begin = datetime.date.today().strftime('%m/%d/%Y')
+    else:
+        begin = begin[5:7]+'/'+begin[8:10]+'/'+begin[:4]
+
+    if end == '':
+        end = datetime.date.today().strftime('%m/%d/%Y')
+    else:
+        end = end[5:7]+'/'+end[8:10]+'/'+end[:4]
+
+    # restrict outlook items to the items in this timeframe
+    restriction = f'[Start] >= "{begin} 0:00am" AND [Start] <= "{end} 11:59pm"'
+    restricted_items = appointments.Restrict(restriction)
+    restricted_items.IncludeRecurrences = 'True'
+    restricted_items.Sort('[Start]')
+
+    ## for debugging -> output restricted items and end the program
+    #for item in restricted_items:
+    #    print(f'{item.Subject} ({item.Start})')
+    #sys.exit(1)
+
+    return restricted_items
 
 if __name__ == "__main__":
     main()
