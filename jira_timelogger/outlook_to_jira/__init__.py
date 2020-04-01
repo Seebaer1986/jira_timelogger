@@ -1,0 +1,1 @@
+from jira_timelogger import outlook_to_jira
