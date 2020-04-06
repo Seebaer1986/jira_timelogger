@@ -1,3 +1,15 @@
-from jira_timelogger.outlook_to_jira import *
+import outlook_to_jira.outlook_to_jira as o
+import worklog_report.worklog_report as r
 
-outlook_to_jira.main()
+
+print('What do you want to do?')
+print('Press "1" to get Outlook appointments and log them to JIRA tickets.')
+print('Press "2" to get a worklog report for a specific user and timespan.')
+sub_module = input()
+
+if sub_module == '1':
+    o.post_outlook_to_jira()
+elif sub_module == '2':
+    r.generate_report()
+else:
+    print(f'{sub_module} is not recognized.')

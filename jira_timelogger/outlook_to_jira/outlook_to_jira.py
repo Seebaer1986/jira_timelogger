@@ -8,7 +8,7 @@ import sys
 import os
 import re
 
-def main():
+def post_outlook_to_jira():
     OUTLOOK_FORMAT = '%d.%m.%Y %H:%M'
     outlook = Dispatch("Outlook.Application")
     ns = outlook.GetNamespace("MAPI")
@@ -269,4 +269,4 @@ def get_outlook_appointments(config, path_to_config, ns, begin, end=''):
     return restricted_items
 
 if __name__ == "__main__":
-    main()
+    post_outlook_to_jira()
