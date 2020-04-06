@@ -12,3 +12,6 @@
 
 # vscode stuff
 /.vscode/
+
+# vs stuff
+/.vs/

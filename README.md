@@ -1,5 +1,7 @@
 # Jira Timelogger
-Read appointments from Microsoft Outlook and use them to log work in an Atlassian JIRA instance.
+The program offers two modes:
+1.) Read appointments from Microsoft Outlook and use them to log work in an Atlassian JIRA instance.
+2.) Get a worklog report for a specific user and timespan from a JIRA instance.
 
 ## Dependencies
 * jira-python
@@ -11,7 +13,7 @@ Read appointments from Microsoft Outlook and use them to log work in an Atlassia
 * install dependencies: `pip install .`
 * run the script: `python jira_timelogger`
 
-## Usage
+## Get Appointments from Microsoft Outlook and log them to Atlassian JIRA tickets
 The script will guide you through and ask different questions:
 
 ### Steps of the script
@@ -49,3 +51,6 @@ The script parses your appointments subjects and searches for a pattern matching
 If your subject contains more than one match, it will use the first match.
 If your subject does not contain a match the appointment will be ignored.
 If your subject does contain a match but it is not a valid issue in your JIRA instance, the appointment will be ignored.
+
+## Generate a worklog report for a specific user and timespan
+work in progress...
