@@ -1,5 +1,5 @@
-import outlook_to_jira.outlook_to_jira as o
-import worklog_report.worklog_report as r
+from outlook_to_jira import outlook_to_jira as o
+from worklog_report import worklog_report as r
 
 
 print('What do you want to do?')
