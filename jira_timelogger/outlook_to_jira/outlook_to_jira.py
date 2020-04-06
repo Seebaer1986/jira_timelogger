@@ -5,9 +5,8 @@ from pathlib import Path
 import configparser
 import datetime
 import sys
-import re
 import os
-
+import re
 
 def main():
     OUTLOOK_FORMAT = '%d.%m.%Y %H:%M'
