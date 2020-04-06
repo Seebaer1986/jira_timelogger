@@ -1,14 +1,13 @@
 from win32com.client import Dispatch
 from jira import JIRA
 from getpass import getpass
-import datetime
-import pdb
-import sys
+from pathlib import Path
 import configparser
-import io
+import datetime
+import sys
 import re
 import os
-from pathlib import Path
+
 
 def main():
     OUTLOOK_FORMAT = '%d.%m.%Y %H:%M'
