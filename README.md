@@ -1,7 +1,7 @@
 # Jira Timelogger
 The program offers two modes:
-1.) Read appointments from Microsoft Outlook and use them to log work in an Atlassian JIRA instance.
-2.) Get a worklog report for a specific user and timespan from a JIRA instance.
+1. Read appointments from Microsoft Outlook and use them to log work in an Atlassian JIRA instance.
+2. Get a worklog report for a specific user and timespan from a JIRA instance.
 
 ## Dependencies
 * jira-python
