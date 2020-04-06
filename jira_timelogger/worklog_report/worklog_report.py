@@ -8,7 +8,7 @@
 # import os
 
 def generate_report():
-    print('foo')
+    print('Not implemented yet.')
 
 if __name__ == "__main__":
     generate_report()
