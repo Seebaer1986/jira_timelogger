@@ -46,7 +46,7 @@ Your Atlassian JIRA `username`.
 
 #### 6. Ask for your password or API Token
 If you use a _server instance_ the script will ask for your _password_, which you can enter securely (is not shown).
-If you want to connect to a _Cloud instance_ of JIRA then you will need to specify a generated _API token_, since basic ath with a password is no longer possible.
+If you want to connect to a _Cloud instance_ of JIRA then you will need to specify a generated _API token_, since basic auth with a password is no longer possible.
 To obtain a token go to https://id.atlassian.com/manage/api-tokens.
 
 ### Saving your settings
