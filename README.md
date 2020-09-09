@@ -15,6 +15,10 @@ It is tested against _JIRA Cloud and JIRA Server_ instances.
 * install dependencies: `pip install .`
 * run the script: `python jira_timelogger`
 
+## Run the script
+* navigate to the repo on your disk with a command prompt
+* run the script: `python jira_timelogger`
+
 ## Get Appointments from Microsoft Outlook and log them to Atlassian JIRA tickets
 The script will guide you through and ask different questions:
 
